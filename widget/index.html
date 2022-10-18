@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="geoFenceWidget">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="buildfire" content="disableTheme,disableFastClick">
+
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.js"></script>
+    <script>
+        var showOneTimeAlertFlag = true;
+
+        buildfire.geo.watchPosition(
+            {enableHighAccuracy: false, timeout: 3000},
+            function (position) {
+                if (!position.coords.latitude) {
+                    if (showOneTimeAlertFlag) {
+                        Buildfire.notifications.alert({message: "Enable your location services"});
+                        showOneTimeAlertFlag = false;
+                    }
+                } else {
+                    document.getElementById('lat').innerHTML = position.coords.latitude;
+                    document.getElementById('lng').innerHTML = position.coords.longitude;
+                }
+            });
+    </script>
+</head>
+<body>
+    <img style="margin: auto; display: block;" src="geoFenceIcon.png">
+    <br>
+    <div style="text-align: center"><div id="lat"></div></div>
+    <div style="text-align: center"><div id="lng"></div></div>
+</body>
+</html>
+
